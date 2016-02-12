@@ -3,7 +3,7 @@
 #        below this number.
 DELAY = 0.001
 
-import win32api, win32con, time
+import win32api, win32con, win32console, time
 
 # left click at given cordinates
 def click (x, y):
@@ -22,14 +22,17 @@ def igor ():
     count += click(a, b)
     if (time.clock() - timer > 0.0999999):
       timer = time.clock()
-      print("= click/s " + str(count*10))
+      #print("= click/s " + str(count*10))
+      win32console.SetConsoleTitle("click/s: " + str(count*10))
       count = 0
         
     time.sleep(DELAY) #minumum os sleeptime is enugh
 
 def main ():
   print("========================")
+  print("= Welcome " + win32api.GetComputerName())
   print("= Move the mouse to exit")
+  print("= Clicks/s in title")
   igor()
   print("========================")
   exit(1)
