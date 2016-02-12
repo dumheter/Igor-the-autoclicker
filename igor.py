@@ -6,7 +6,7 @@ DELAY = 0.001
 import win32api, win32con, win32console, time
 
 # left click at given cordinates
-def click (x, y):
+def click (x, y) -> int:
   win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,x,y,0,0)
   win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,x,y,0,0)
   return 1
@@ -30,28 +30,34 @@ def igor ():
 def keyboardHandler():
   _click = _esc = False
   while (not _esc):
+    if (_click):
+      igor()
+      print("= Cursor movement, stoped clicking.")
+      
     _click = _esc = False
-    igor()
     while (not _esc and not _click):
       if (abs(win32api.GetKeyState(120)) > 1):
         _click = True
-        print("= F9 pressed, resuming")
+        print("= F9 pressed, now clicking!")
 
-      if (abs(win32api.GetKeyState(0x1B)) > 1):
+      elif (abs(win32api.GetKeyState(0x1B)) > 1):
         _esc = True
-        print("= ESC pressed, exiting")      
-    
-def main ():
+        print("= ESC pressed, exiting")
+        
+      else:
+        time.sleep(0.01)
+
+def main():
   print("========================")
   print("= Welcome " + win32api.GetComputerName())
-  print("= Move the mouse to exit")
-  print("= Clicks/s in title")
-  print("========================")
-  print("= To resume, press F9")
-  print("= To exit, press esc")
+  print("= Press F9 to start/resume.")
+  print("= Move the cursor to pause")
+  print("= Press ESC to exit.")
+  print("= Clicks/s is displayed in the title.")
+  print("=========================")
+  print("= Press F9 to begin auto clicking")
   keyboardHandler()
   print("========================")
-  exit(1)
 
 if __name__ == "__main__":
   main()
