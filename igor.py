@@ -1,6 +1,7 @@
-# TODO
-# * Don't use sleep
-# * Count cps
+# @delay minimum time in seconds between each click
+#        chrome browser has trouble handling anything
+#        below this number.
+DELAY = 0.001
 
 import win32api, win32con, time
 
@@ -8,22 +9,30 @@ import win32api, win32con, time
 def click (x, y):
   win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,x,y,0,0)
   win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,x,y,0,0)
+  return 1
 
 # Igor provides what others can't.
 def igor ():
+  a, b = win32api.GetCursorPos()
+  ref = a
+  timer = time.clock()
+  count = 0
+  while (ref == a):
     a, b = win32api.GetCursorPos()
-    ref = a
-    while (ref == a):
-        a, b = win32api.GetCursorPos()
-        click(a, b)
-        time.sleep(0.001) #minumum os sleeptime is enugh
+    count += click(a, b)
+    if (time.clock() - timer > 0.0999999):
+      timer = time.clock()
+      print("= click/s " + str(count*10))
+      count = 0
+        
+    time.sleep(DELAY) #minumum os sleeptime is enugh
 
 def main ():
-    print("==========================")
-    print("=== Move the mouse to exit")
-    igor()
-    print("==========================")
-    exit(1)
+  print("========================")
+  print("= Move the mouse to exit")
+  igor()
+  print("========================")
+  exit(1)
 
 if __name__ == "__main__":
-    main()
+  main()
