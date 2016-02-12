@@ -22,18 +22,34 @@ def igor ():
     count += click(a, b)
     if (time.clock() - timer > 0.0999999):
       timer = time.clock()
-      #print("= click/s " + str(count*10))
       win32console.SetConsoleTitle("click/s: " + str(count*10))
       count = 0
         
-    time.sleep(DELAY) #minumum os sleeptime is enugh
+    time.sleep(DELAY)
 
+def keyboardHandler():
+  _click = _esc = False
+  while (not _esc):
+    _click = _esc = False
+    igor()
+    while (not _esc and not _click):
+      if (abs(win32api.GetKeyState(120)) > 1):
+        _click = True
+        print("= F9 pressed, resuming")
+
+      if (abs(win32api.GetKeyState(0x1B)) > 1):
+        _esc = True
+        print("= ESC pressed, exiting")      
+    
 def main ():
   print("========================")
   print("= Welcome " + win32api.GetComputerName())
   print("= Move the mouse to exit")
   print("= Clicks/s in title")
-  igor()
+  print("========================")
+  print("= To resume, press F9")
+  print("= To exit, press esc")
+  keyboardHandler()
   print("========================")
   exit(1)
 
