@@ -3,7 +3,7 @@
 #        below this number.
 DELAY = 0.001
 
-import win32api, win32con, win32console, time
+import win32api, win32con, time, os
 
 # left click at given cordinates
 def click (x, y) -> int:
@@ -22,7 +22,7 @@ def igor ():
     count += click(a, b)
     if (time.clock() - timer > 0.0999999):
       timer = time.clock()
-      win32console.SetConsoleTitle("click/s: " + str(count*10))
+      win32api.SetConsoleTitle("click/s: " + str(count*10))
       count = 0
         
     time.sleep(DELAY)
@@ -49,7 +49,7 @@ def keyboardHandler():
 
 def main():
   print("========================")
-  print("= Welcome " + win32api.GetComputerName())
+  print("= Welcome " + os.getlogin())
   print("= Press F9 to start/resume.")
   print("= Move the cursor to pause")
   print("= Press ESC to exit.")
