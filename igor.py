@@ -1,7 +1,7 @@
 # @delay minimum time in seconds between each click
 #        chrome browser has trouble handling anything
 #        below this number.
-DELAY = 0.001
+DELAY = 0.005
 
 import win32api, win32con, time, os
 
@@ -24,7 +24,7 @@ def igor ():
       timer = time.clock()
       win32api.SetConsoleTitle("click/s: " + str(count*10))
       count = 0
-        
+
     time.sleep(DELAY)
 
 def keyboardHandler():
@@ -33,7 +33,7 @@ def keyboardHandler():
     if (_click):
       igor()
       print("= Cursor movement, stoped clicking.")
-      
+
     _click = _esc = False
     while (not _esc and not _click):
       if (abs(win32api.GetKeyState(120)) > 1):
@@ -43,7 +43,7 @@ def keyboardHandler():
       elif (abs(win32api.GetKeyState(0x1B)) > 1):
         _esc = True
         print("= ESC pressed, exiting")
-        
+
       else:
         time.sleep(0.01)
 
