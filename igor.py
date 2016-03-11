@@ -32,13 +32,13 @@ def keyboardHandler():
   while (not _esc):
     if (_click):
       igor()
-      print("= Cursor movement, stoped clicking.")
+      print("\033[91m" + "= Cursor movement, stoped clicking." + "\033[0m")
 
     _click = _esc = False
     while (not _esc and not _click):
       if (abs(win32api.GetKeyState(120)) > 1):
         _click = True
-        print("= F9 pressed, now clicking!")
+        print("\033[92m" + "= F9 pressed, now clicking!" + "\033[0m")
 
       elif (abs(win32api.GetKeyState(0x1B)) > 1):
         _esc = True
