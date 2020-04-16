@@ -84,7 +84,7 @@ def igor (_click, stop_on_mouse_move):
   """
   a, b = win32api.GetCursorPos()
   ref = a
-  timer = time.clock()
+  timer = time.monotonic()
   count = 0
   run = True
   while (run):
@@ -96,8 +96,8 @@ def igor (_click, stop_on_mouse_move):
 
     a, b = win32api.GetCursorPos()
     count += click(a, b, _click)
-    if (time.clock() - timer > 0.0999999):
-      timer = time.clock()
+    if (time.monotonic() - timer > 0.0999999):
+      timer = time.monotonic()
       win32api.SetConsoleTitle("click/s: " + str(count*10))
       count = 0
 
